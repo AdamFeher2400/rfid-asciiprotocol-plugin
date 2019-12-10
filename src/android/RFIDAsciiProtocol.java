@@ -35,7 +35,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
     /**
      * Constructor.
      */
-    public Device() {
+    public RFIDAsciiProtocol() {
     }
 
     /**
