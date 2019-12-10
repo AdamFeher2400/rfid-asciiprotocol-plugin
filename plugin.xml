@@ -27,7 +27,7 @@
     <description>RFID-AsciiProtocol Plugin</description>
     <license>Apache 2.0</license>
     <keywords>rfid-asciiprotocol</keywords>
-    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
+    <repo>https://github.com/AdamFeher2400/rfid-asciiprotocol-plugin.git</repo>
     <issue>https://github.com/AdamFeher2400/rfid-asciiprotocol-plugin/issues</issue>
 
     <js-module src="www/rfid_asciiprotocol.js" name="device">
