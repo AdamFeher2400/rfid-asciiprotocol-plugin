@@ -30,7 +30,7 @@
     <repo>https://github.com/AdamFeher2400/rfid-asciiprotocol-plugin.git</repo>
     <issue>https://github.com/AdamFeher2400/rfid-asciiprotocol-plugin/issues</issue>
 
-    <js-module src="www/rfid_asciiprotocol.js" name="device">
+    <js-module src="www/rfid_asciiprotocol.js" name="RFIDAsciiProtocol">
         <clobbers target="RFIDAsciiProtocol" />
     </js-module>
 
