@@ -23,7 +23,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="rfid-asciiprotocol-plugin-tests"
     version="1.0.0">
-    <name>RFID-AsciiProtocol Plugin Tests</name>
+    <name>RFIDAsciiProtocol Plugin Tests</name>
     <license>Apache 2.0</license>
 
     <js-module src="tests.js" name="tests">

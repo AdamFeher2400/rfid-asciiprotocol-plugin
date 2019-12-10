@@ -1,7 +1,7 @@
 {
   "name": "rfid-asciiprotocol-plugin",
   "version": "1.0.0",
-  "description": "RFID-AsciiProtocol Plugin",
+  "description": "RFIDAsciiProtocol Plugin",
   "types": "./types/index.d.ts",
   "cordova": {
     "id": "rfid-asciiprotocol-plugin",

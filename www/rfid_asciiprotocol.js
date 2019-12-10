@@ -1,6 +1,6 @@
 var exec = require('cordova/exec');
 
-var PLUGIN_NAME = 'RFID-AsciiProtocol';
+var PLUGIN_NAME = 'RFIDAsciiProtocol';
 
 var RFIDAsciiProtocol = {
     echo: function(phrase, cb) {
