@@ -30,18 +30,18 @@
     <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
     <issue>https://github.com/AdamFeher2400/rfid-asciiprotocol-plugin/issues</issue>
 
-    <js-module src="www/device.js" name="device">
-        <clobbers target="device" />
+    <js-module src="www/rfid_asciiprotocol.js" name="device">
+        <clobbers target="RFIDAsciiProtocol" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Device" >
-                <param name="android-package" value="org.apache.cordova.device.Device"/>
+            <feature name="RFIDAsciiProtocol" >
+                <param name="android-package" value="com.yiyi45.RFIDAsciiProtocol"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" />
+        <source-file src="src/android/RFIDAsciiProtocol.java" target-dir="src/com/yiyi45" />
     </platform>
 </plugin>
