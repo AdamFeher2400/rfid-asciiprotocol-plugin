@@ -3,7 +3,7 @@ var exec = require('cordova/exec');
 var PLUGIN_NAME = 'RFID-AsciiProtocol';
 
 var RFIDAsciiProtocol = {
-    echo: funciton(phrase, cb) {
+    echo: function(phrase, cb) {
         exec(cb, null, PLUGIN_NAME, 'echo', [phrase]);
     },
     getDate: function(cb) {
