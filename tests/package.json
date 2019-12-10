@@ -1,0 +1,14 @@
+{
+  "name": "rfid-asciiprotocol-plugin-tests",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "rfid-asciiprotocol-plugin-tests",
+    "platforms": []
+  },
+  "keywords": [
+    "rfid-asciiprotocol"
+  ],
+  "author": "",
+  "license": "Apache 2.0"
+}
