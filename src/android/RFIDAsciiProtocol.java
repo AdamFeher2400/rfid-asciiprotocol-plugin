@@ -18,6 +18,8 @@
 */
 package com.yiyi45;
 
+import java.util.Date;
+
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
