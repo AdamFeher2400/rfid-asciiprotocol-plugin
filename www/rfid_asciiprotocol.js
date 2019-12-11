@@ -3,11 +3,14 @@ var exec = require('cordova/exec');
 var PLUGIN_NAME = 'RFIDAsciiProtocol';
 
 var RFIDAsciiProtocol = {
-    echo: function(phrase, cb) {
-        exec(cb, null, PLUGIN_NAME, 'echo', [phrase]);
+    isConnected: function(cb) {
+        exec(cb, null, PLUGIN_NAME, 'isConnected', []);
     },
-    getDate: function(cb) {
-        exec(cb, null, PLUGIN_NAME, 'getDate', []);
+    connect: function(cb) {
+        exec(cb, null, PLUGIN_NAME, 'connect', []);
+    },
+    scan: function(cb) {
+        exec(cb, null, PLUGIN_NAME, 'scan', []);
     }
 };
 module.exports = RFIDAsciiProtocol;

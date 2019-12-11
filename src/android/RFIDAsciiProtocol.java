@@ -1,24 +1,4 @@
-/*
-       Licensed to the Apache Software Foundation (ASF) under one
-       or more contributor license agreements.  See the NOTICE file
-       distributed with this work for additional information
-       regarding copyright ownership.  The ASF licenses this file
-       to you under the Apache License, Version 2.0 (the
-       "License"); you may not use this file except in compliance
-       with the License.  You may obtain a copy of the License at
-
-         http://www.apache.org/licenses/LICENSE-2.0
-
-       Unless required by applicable law or agreed to in writing,
-       software distributed under the License is distributed on an
-       "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-       KIND, either express or implied.  See the License for the
-       specific language governing permissions and limitations
-       under the License.
-*/
 package com.yiyi45;
-
-import java.util.Date;
 
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
@@ -29,46 +9,117 @@ import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.provider.Settings;
+import com.uk.tsl.rfid.asciiprotocol.AsciiCommander;
+import com.uk.tsl.rfid.asciiprotocol.DeviceProperties;
+import com.uk.tsl.rfid.asciiprotocol.commands.FactoryDefaultsCommand;
+import com.uk.tsl.rfid.asciiprotocol.device.ConnectionState;
+import com.uk.tsl.rfid.asciiprotocol.device.IAsciiTransport;
+import com.uk.tsl.rfid.asciiprotocol.device.ObservableReaderList;
+import com.uk.tsl.rfid.asciiprotocol.device.Reader;
+import com.uk.tsl.rfid.asciiprotocol.device.ReaderManager;
+import com.uk.tsl.rfid.asciiprotocol.device.TransportType;
+import com.uk.tsl.rfid.asciiprotocol.enumerations.QuerySession;
+import com.uk.tsl.rfid.asciiprotocol.enumerations.TriState;
+import com.uk.tsl.rfid.asciiprotocol.parameters.AntennaParameters;
+import com.uk.tsl.rfid.asciiprotocol.responders.LoggerResponder;
+import com.uk.tsl.utils.Observable;
 
 public class RFIDAsciiProtocol extends CordovaPlugin {
     private static final String TAG = "RFIDAsciiProtocol";
-    /**
-     * Constructor.
-     */
+
+        //----------------------------------------------------------------------------------------------
+    // ReaderList Observers
+    //----------------------------------------------------------------------------------------------
+    Observable.Observer<Reader> mAddedObserver = new Observable.Observer<Reader>()
+    {
+        @Override
+        public void update(Observable<? extends Reader> observable, Reader reader)
+        {
+            // See if this newly added Reader should be used
+            AutoSelectReader(true);
+        }
+    };
+
+    Observable.Observer<Reader> mUpdatedObserver = new Observable.Observer<Reader>()
+    {
+        @Override
+        public void update(Observable<? extends Reader> observable, Reader reader)
+        {
+        }
+    };
+
+    Observable.Observer<Reader> mRemovedObserver = new Observable.Observer<Reader>()
+    {
+        @Override
+        public void update(Observable<? extends Reader> observable, Reader reader)
+        {
+            mReader = null;
+            // Was the current Reader removed
+            if( reader == mReader)
+            {
+                mReader = null;
+
+                // Stop using the old Reader
+                getCommander().setReader(mReader);
+            }
+        }
+    };
+
     public RFIDAsciiProtocol() {
     }
 
-    /**
-     * Sets the context of the Command. This can then be used to do things like
-     * get file paths associated with the Activity.
-     *
-     * @param cordova The context of the main Activity.
-     * @param webView The CordovaWebView Cordova is running in.
-     */
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+
+        AsciiCommander.createSharedInstance(getApplicationContext());
+
+    	AsciiCommander commander = getCommander();
+
+        // Ensure that all existing responders are removed
+        commander.clearResponders();
+
+		// Add the LoggerResponder - this simply echoes all lines received from the reader to the log
+        // and passes the line onto the next responder
+        // This is added first so that no other responder can consume received lines before they are logged.
+        commander.addResponder(new LoggerResponder());
+
+        // Add a synchronous responder to handle synchronous commands
+        commander.addSynchronousResponder();
+
+        // Create the single shared instance for this ApplicationContext
+        ReaderManager.create(getApplicationContext());
+
+        // Add observers for changes
+        ReaderManager.sharedInstance().getReaderList().readerAddedEvent().addObserver(mAddedObserver);
+        ReaderManager.sharedInstance().getReaderList().readerUpdatedEvent().addObserver(mUpdatedObserver);
+        ReaderManager.sharedInstance().getReaderList().readerRemovedEvent().addObserver(mRemovedObserver);
     }
 
-    /**
-     * Executes the request and returns PluginResult.
-     *
-     * @param action            The action to execute.
-     * @param args              JSONArry of arguments for the plugin.
-     * @param callbackContext   The callback id used when calling back into JavaScript.
-     * @return                  True if the action was valid, false if not.
-     */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("echo".equals(action)) {
-            String phrase = args.getString(0);
-            LOG.d(TAG, phrase);
+        if ("isConnected".equals(action)) {
+            final PluginResult result = new PluginResult(PluginResult.Status.OK, String.valueOf(isConnected()));
+            callbackContext.sendPluginResult(result);
         }
-        else if("getDate".equals(action)) {
-            final PluginResult result = new PluginResult(PluginResult.Status.OK, (new Date()).toString());
+        else if ("connect".equals(action)) {
+            connect();
+        }
+        else if("scan".equals(action)) {
+            final PluginResult result = new PluginResult(PluginResult.Status.OK, scan());
             callbackContext.sendPluginResult(result);
         }
         return true;
+    }
+
+    private boolean isConnected() {
+        return false;
+    }
+
+    private void connect() {
+
+    }
+
+    private String scan() {
+        return "BC: 22222";
     }
 }
