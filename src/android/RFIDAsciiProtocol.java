@@ -28,7 +28,8 @@ import com.uk.tsl.utils.Observable;
 public class RFIDAsciiProtocol extends CordovaPlugin {
     private static final String TAG = "RFIDAsciiProtocol";
 
-        //----------------------------------------------------------------------------------------------
+    private Reader mReader = null;
+    //----------------------------------------------------------------------------------------------
     // ReaderList Observers
     //----------------------------------------------------------------------------------------------
     Observable.Observer<Reader> mAddedObserver = new Observable.Observer<Reader>()
@@ -66,6 +67,78 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
         }
     };
 
+    private void AutoSelectReader(boolean attemptReconnect)
+    {
+        ObservableReaderList readerList = ReaderManager.sharedInstance().getReaderList();
+        Reader usbReader = null;
+        if( readerList.list().size() >= 1)
+        {
+            // Currently only support a single USB connected device so we can safely take the
+            // first CONNECTED reader if there is one
+            for (Reader reader : readerList.list())
+            {
+                IAsciiTransport transport = reader.getActiveTransport();
+                if (reader.hasTransportOfType(TransportType.USB))
+                {
+                    usbReader = reader;
+                    break;
+                }
+            }
+        }
+
+        if( mReader == null )
+        {
+            if( usbReader != null )
+            {
+                // Use the Reader found, if any
+                mReader = usbReader;
+                getCommander().setReader(mReader);
+            }
+        }
+        else
+        {
+            // If already connected to a Reader by anything other than USB then
+            // switch to the USB Reader
+            IAsciiTransport activeTransport = mReader.getActiveTransport();
+            if ( activeTransport != null && activeTransport.type() != TransportType.USB && usbReader != null)
+            {
+                mReader.disconnect();
+
+                mReader = usbReader;
+
+                // Use the Reader found, if any
+                getCommander().setReader(mReader);
+            }
+        }
+
+        // Reconnect to the chosen Reader
+        if( mReader != null && (mReader.getActiveTransport()== null || mReader.getActiveTransport().connectionStatus().value() == ConnectionState.DISCONNECTED))
+        {
+            // Attempt to reconnect on the last used transport unless the ReaderManager is cause of OnPause (USB device connecting)
+            if( attemptReconnect )
+            {
+                if( mReader.allowMultipleTransports() || mReader.getLastTransportType() == null )
+                {
+                    // Reader allows multiple transports or has not yet been connected so connect to it over any available transport
+                    mReader.connect();
+                }
+                else
+                {
+                    // Reader supports only a single active transport so connect to it over the transport that was last in use
+                    mReader.connect(mReader.getLastTransportType());
+                }
+            }
+        }
+    }
+    
+    /**
+     * @return the current AsciiCommander
+     */
+    protected AsciiCommander getCommander()
+    {
+        return AsciiCommander.sharedInstance();
+    }
+
     public RFIDAsciiProtocol() {
     }
 
@@ -88,7 +161,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
         commander.addSynchronousResponder();
 
         // Create the single shared instance for this ApplicationContext
-        ReaderManager.create(getApplicationContext());
+        ReaderManager.create(cordova.getActivity().getApplicationContext());
 
         // Add observers for changes
         ReaderManager.sharedInstance().getReaderList().readerAddedEvent().addObserver(mAddedObserver);
