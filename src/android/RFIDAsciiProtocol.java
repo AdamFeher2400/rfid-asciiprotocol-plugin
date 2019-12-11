@@ -145,7 +145,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
-        AsciiCommander.createSharedInstance(getApplicationContext());
+        AsciiCommander.createSharedInstance(cordova.getActivity().getApplicationContext());
 
     	AsciiCommander commander = getCommander();
 
