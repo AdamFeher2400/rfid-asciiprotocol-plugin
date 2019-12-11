@@ -36,14 +36,15 @@
 
     <!-- android -->
     <platform name="android">
+        <source-file src="src/android/RFIDAsciiProtocol.java" target-dir="src/com/yiyi45" />
+        
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="RFIDAsciiProtocol" >
                 <param name="android-package" value="com.yiyi45.RFIDAsciiProtocol"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/RFIDAsciiProtocol.java" target-dir="src/com/yiyi45" />
-        <lib-file src="lib/rfid-asciiprotocol.aar"/>
         <framework src="src/android/rfid-asciiprotocol.gradle" custom="true" type="gradleReference" />
+        <resource-file src="src/android/rfid-asciiprotocol.aar" target="libs/rfid-asciiprotocol.aar"/>
     </platform>
 </plugin>

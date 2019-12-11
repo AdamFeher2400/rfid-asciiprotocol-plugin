@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-   implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+   compile(name:'rfid-asciiprotocol', ext:'aar')
 }
 
 android {
