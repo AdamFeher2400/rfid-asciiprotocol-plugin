@@ -44,6 +44,6 @@
 
         <source-file src="src/android/RFIDAsciiProtocol.java" target-dir="src/com/yiyi45" />
         <lib-file src="lib/rfid-asciiprotocol.aar"/>
-        <framework src="src/android/rfid-asciiprotocol.gradle" custom="true" type="gradleReference" />
+        <framework src="src/android/*.gradle" custom="true" type="gradleReference" />
     </platform>
 </plugin>
