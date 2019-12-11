@@ -45,6 +45,6 @@
         </config-file>
 
         <framework src="src/android/Rfid.AsciiProtocol-2.0.1-release.gradle" custom="true" type="gradleReference" />
-        <resource-file src="src/android/Rfid.AsciiProtocol-2.0.1-release.aar" target="libs/Rfid.AsciiProtocol-2.0.1-release.aar"/>
+        <resource-file src="lib/Rfid.AsciiProtocol-2.0.1-release.aar" target="libs/Rfid.AsciiProtocol-2.0.1-release.aar"/>
     </platform>
 </plugin>
