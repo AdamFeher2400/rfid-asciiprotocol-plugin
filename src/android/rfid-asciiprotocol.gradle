@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-   compile(name:'Rfid.AsciiProtocol-2.0.1-release', ext:'aar')
+   compile(name:'rfid-asciiprotocol', ext:'aar')
 }
 
 android {
