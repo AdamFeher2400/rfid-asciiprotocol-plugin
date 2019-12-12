@@ -45,7 +45,7 @@
         
         <source-file src="src/android/Inventory/ModelBase.java" target-dir="src/com/uk/tsl/rfid" />
         <source-file src="src/android/Inventory/ModelException.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/Inventory/Weakhandler.java" target-dir="src/com/uk/tsl/rfid" />
+        <source-file src="src/android/Inventory/WeakHandler.java" target-dir="src/com/uk/tsl/rfid" />
         
         <source-file src="src/android/Inventory/InventoryActivity.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />
         <source-file src="src/android/Inventory/InventoryModel.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />        
