@@ -7,7 +7,7 @@
                                              android:background="#f8f8f8"
                                              android:id="@+id/relativeLayout">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/reader_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,6 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>
