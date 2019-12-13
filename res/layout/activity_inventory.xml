@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".InventoryActivity" >
+    tools:context="com.uk.tsl.rfid.samples.inventory.InventoryActivity" >
 
     <LinearLayout
         android:id="@+id/resultLinearLayout"
