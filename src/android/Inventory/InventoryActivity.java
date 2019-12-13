@@ -55,7 +55,8 @@ public class InventoryActivity extends AppCompatActivity
 {
     // Debugging
     private static final String TAG = "InventoryActivity";
-	private static final boolean D = BuildConfig.DEBUG;
+    // private static final boolean D = BuildConfig.DEBUG;
+    private static final boolean D = true;
 
     // The list of results from actions
     private ArrayAdapter<String> mResultsArrayAdapter;
