@@ -1,6 +1,6 @@
 package com.uk.tsl.rfid;
 
-import androidx.appcompat.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.uk.tsl.rfid.devicelist.R;
