@@ -55,6 +55,11 @@
         
         <framework src="src/android/Rfid.AsciiProtocol-2.0.1-release.gradle" custom="true" type="gradleReference" />
 
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.uk.tsl.rfid.samples.inventory.InventoryActivity" />
+            <activity android:name="com.uk.tsl.rfid.DeviceListActivity" />
+        </config-file>
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="RFIDAsciiProtocol" >
                 <param name="android-package" value="com.yiyi45.RFIDAsciiProtocol"/>
