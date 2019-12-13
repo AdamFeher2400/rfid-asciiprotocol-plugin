@@ -179,7 +179,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
             callbackContext.sendPluginResult(result);
         }
         else if ("connect".equals(action)) {
-            connect();
+            // connect();
             final PluginResult result = new PluginResult(PluginResult.Status.OK, "success");
             callbackContext.sendPluginResult(result);
         }
