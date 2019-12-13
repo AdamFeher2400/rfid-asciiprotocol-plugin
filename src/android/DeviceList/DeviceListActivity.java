@@ -1,11 +1,12 @@
 
 package com.uk.tsl.rfid;
 
+import com.driverdude.ngnly2.R;
+
 import com.uk.tsl.rfid.asciiprotocol.device.ObservableReaderList;
 import com.uk.tsl.rfid.asciiprotocol.device.Reader;
 import com.uk.tsl.rfid.asciiprotocol.device.ReaderManager;
 import com.uk.tsl.rfid.asciiprotocol.device.TransportType;
-import com.uk.tsl.rfid.devicelist.R;
 import com.uk.tsl.utils.Observable;
 
 import android.app.Activity;

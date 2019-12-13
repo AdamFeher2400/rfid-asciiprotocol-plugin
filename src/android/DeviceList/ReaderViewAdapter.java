@@ -11,10 +11,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.driverdude.ngnly2.R;
+
 import com.uk.tsl.rfid.asciiprotocol.device.ObservableReaderList;
 import com.uk.tsl.rfid.asciiprotocol.device.Reader;
 import com.uk.tsl.rfid.asciiprotocol.device.TransportType;
-import com.uk.tsl.rfid.devicelist.R;
 
 public class ReaderViewAdapter extends RecyclerView.Adapter<ReaderViewAdapter.ReaderViewHolder>
 {

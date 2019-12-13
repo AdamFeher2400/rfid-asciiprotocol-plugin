@@ -2,10 +2,11 @@ package com.uk.tsl.rfid;
 
 import android.util.Log;
 
+import com.driverdude.ngnly2.R;
+
 // import com.uk.tsl.rfid.asciiprotocol.BuildConfig;
 import com.uk.tsl.rfid.asciiprotocol.Constants;
 import com.uk.tsl.rfid.asciiprotocol.device.Reader;
-import com.uk.tsl.rfid.devicelist.R;
 import com.uk.tsl.utils.StringHelper;
 
 import java.util.regex.Matcher;

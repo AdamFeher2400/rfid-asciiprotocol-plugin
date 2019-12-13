@@ -3,7 +3,7 @@ package com.uk.tsl.rfid;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.uk.tsl.rfid.devicelist.R;
+import com.driverdude.ngnly2.R;
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
