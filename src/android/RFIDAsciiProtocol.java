@@ -1,5 +1,8 @@
 package com.yiyi45;
 
+import android.content.Context;
+import android.content.Intent;
+
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -190,6 +193,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
     }
 
     private void connect() {
+        Context context = cordova.getActivity().getApplicationContext();
         Intent intent = new Intent(context, InventoryActivity.class);
         this.cordova.getActivity().startActivity(intent);
     }
