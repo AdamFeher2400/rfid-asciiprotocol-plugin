@@ -23,6 +23,7 @@ import com.uk.tsl.rfid.asciiprotocol.enumerations.QuerySession;
 import com.uk.tsl.rfid.asciiprotocol.enumerations.TriState;
 import com.uk.tsl.rfid.asciiprotocol.parameters.AntennaParameters;
 import com.uk.tsl.rfid.asciiprotocol.responders.LoggerResponder;
+import com.uk.tsl.rfid.samples.inventory.InventoryActivity;
 import com.uk.tsl.utils.Observable;
 
 public class RFIDAsciiProtocol extends CordovaPlugin {
@@ -145,28 +146,28 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
-        AsciiCommander.createSharedInstance(cordova.getActivity().getApplicationContext());
+        // AsciiCommander.createSharedInstance(cordova.getActivity().getApplicationContext());
 
-    	AsciiCommander commander = getCommander();
+    	// AsciiCommander commander = getCommander();
 
-        // Ensure that all existing responders are removed
-        commander.clearResponders();
+        // // Ensure that all existing responders are removed
+        // commander.clearResponders();
 
-		// Add the LoggerResponder - this simply echoes all lines received from the reader to the log
-        // and passes the line onto the next responder
-        // This is added first so that no other responder can consume received lines before they are logged.
-        commander.addResponder(new LoggerResponder());
+		// // Add the LoggerResponder - this simply echoes all lines received from the reader to the log
+        // // and passes the line onto the next responder
+        // // This is added first so that no other responder can consume received lines before they are logged.
+        // commander.addResponder(new LoggerResponder());
 
-        // Add a synchronous responder to handle synchronous commands
-        commander.addSynchronousResponder();
+        // // Add a synchronous responder to handle synchronous commands
+        // commander.addSynchronousResponder();
 
-        // Create the single shared instance for this ApplicationContext
-        ReaderManager.create(cordova.getActivity().getApplicationContext());
+        // // Create the single shared instance for this ApplicationContext
+        // ReaderManager.create(cordova.getActivity().getApplicationContext());
 
-        // Add observers for changes
-        ReaderManager.sharedInstance().getReaderList().readerAddedEvent().addObserver(mAddedObserver);
-        ReaderManager.sharedInstance().getReaderList().readerUpdatedEvent().addObserver(mUpdatedObserver);
-        ReaderManager.sharedInstance().getReaderList().readerRemovedEvent().addObserver(mRemovedObserver);
+        // // Add observers for changes
+        // ReaderManager.sharedInstance().getReaderList().readerAddedEvent().addObserver(mAddedObserver);
+        // ReaderManager.sharedInstance().getReaderList().readerUpdatedEvent().addObserver(mUpdatedObserver);
+        // ReaderManager.sharedInstance().getReaderList().readerRemovedEvent().addObserver(mRemovedObserver);
     }
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -189,7 +190,8 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
     }
 
     private void connect() {
-
+        Intent intent = new Intent(context, InventoryActivity.class);
+        this.cordova.getActivity().startActivity(intent);
     }
 
     private String scan() {
