@@ -1,6 +1,8 @@
 package com.uk.tsl.rfid;
 
-import androidx.recyclerview.widget.RecyclerView;
+// import androidx.recyclerview.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView;
+
 import android.view.View;
 
 import com.driverdude.ngnly2.R;

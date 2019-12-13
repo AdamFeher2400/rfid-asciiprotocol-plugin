@@ -1,6 +1,7 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light">
+    <!-- <style name="AppBaseTheme" parent="Base.Theme.AppCompat.Light"> -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
     </style>
