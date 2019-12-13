@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".InventoryActivity" >
+
+    <LinearLayout
+        android:id="@+id/resultLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fastIdCheckBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:background="#eef"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            android:background="#cce"
+            android:text="@string/tag_list_title"
+            android:textColor="#000" />
+
+        <ListView
+            android:id="@+id/resultListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight="2" >
+
+        </ListView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cce"
+            android:text="@string/barcode_list_title"
+            android:textColor="#000" />
+
+        <ListView
+            android:id="@+id/barcodeListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+        </ListView>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/scanButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/scan_button_text" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/scanButton"
+        android:layout_alignBottom="@+id/scanButton"
+        android:layout_alignRight="@+id/resultLinearLayout"
+        android:text="@string/clear_button_text" />
+
+    <SeekBar
+        android:id="@+id/powerSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scanButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@+id/powerTextView" />
+
+    <TextView
+        android:id="@+id/powerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/powerSeekBar"
+        android:layout_alignRight="@+id/clearButton"
+        android:gravity="center"
+        android:text="@string/power_level_label_text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <CheckBox
+        android:id="@+id/fastIdCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/powerSeekBar"
+        android:layout_alignRight="@+id/powerTextView"
+        android:layout_alignTop="@+id/sessionSpinner"
+        android:layout_marginBottom="8dp"
+        android:text="@string/use_fast_id_title" />
+
+    <Spinner
+        android:id="@+id/sessionSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/powerSeekBar"
+        android:layout_alignLeft="@+id/powerSeekBar"
+        android:layout_marginBottom="8dp"
+        android:layout_toLeftOf="@+id/fastIdCheckBox" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scanButton"
+        android:layout_alignTop="@+id/scanButton"
+        android:layout_toLeftOf="@+id/clearButton"
+        android:layout_toRightOf="@+id/scanButton"
+        android:gravity="center_vertical|center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#A00"
+        android:textSize="16sp" />
+
+</RelativeLayout>

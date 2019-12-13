@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
-    <string name="app_name">MyApp</string>
+    <string name="app_name">DriverDude</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
 
@@ -26,5 +26,17 @@
     <string name="description_ih21">Bluetooth® UHF RFID Reader</string>
 
     <!-- Inventory -->
+    <string name="action_settings">Settings</string>
+    <string name="scan_button_text">Scan</string>
+    <string name="clear_button_text">Clear</string>
+    <string name="power_level_label_text">dBm</string>
+    <string name="use_fast_id_title">Fast Id</string>
+    <string name="tag_list_title">Transponders</string>
+    <string name="barcode_list_title">Barcodes</string>
+
+    <string name="connect_reader_menu_item_text">Connect Reader</string>
+    <string name="change_reader_menu_item_text">Change Reader</string>
+    <string name="disconnect_reader_menu_item_text">Disconnect Reader</string>
+    <string name="reset_reader_menu_item_text">Reset Reader</string>
 
 </resources>
