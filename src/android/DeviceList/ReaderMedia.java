@@ -2,9 +2,9 @@ package com.uk.tsl.rfid;
 
 import android.util.Log;
 
+import com.driverdude.ngnly2.BuildConfig;
 import com.driverdude.ngnly2.R;
 
-// import com.uk.tsl.rfid.asciiprotocol.BuildConfig;
 import com.uk.tsl.rfid.asciiprotocol.Constants;
 import com.uk.tsl.rfid.asciiprotocol.device.Reader;
 import com.uk.tsl.utils.StringHelper;
@@ -122,6 +122,5 @@ public class ReaderMedia
 
 
     private static final String TAG = "ReaderMedia";
-    // private static final boolean D = BuildConfig.DEBUG;
-    private static final boolean D = true;
+    private static final boolean D = BuildConfig.DEBUG;
 }

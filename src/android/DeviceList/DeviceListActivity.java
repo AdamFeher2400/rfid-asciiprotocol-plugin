@@ -1,6 +1,7 @@
 
 package com.uk.tsl.rfid;
 
+import com.driverdude.ngnly2.BuildConfig;
 import com.driverdude.ngnly2.R;
 
 import com.uk.tsl.rfid.asciiprotocol.device.ObservableReaderList;
@@ -14,10 +15,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
-// import androidx.recyclerview.widget.DividerItemDecoration;
-// import androidx.recyclerview.widget.LinearLayoutManager;
-// import androidx.recyclerview.widget.RecyclerView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,7 +30,7 @@ import android.view.Window;
 public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "DeviceListActivity";
-    private static final boolean D = true;
+    private static final boolean D = BuildConfig.DEBUG;
 
 
     // Intent request codes

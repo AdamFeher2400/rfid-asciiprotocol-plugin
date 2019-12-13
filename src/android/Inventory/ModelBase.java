@@ -6,8 +6,9 @@ package com.uk.tsl.rfid;
 
 import java.util.Date;
 
+import com.driverdude.ngnly2.BuildConfig;
+
 import com.uk.tsl.rfid.asciiprotocol.AsciiCommander;
-// import com.uk.tsl.rfid.samples.inventory.BuildConfig;
 
 import android.annotation.TargetApi;
 import android.os.AsyncTask;
@@ -18,8 +19,7 @@ import android.util.Log;
 public class ModelBase {
 
 	// Debugging
-	// private static final boolean D = BuildConfig.DEBUG;
-	private static final boolean D = true;
+	private static final boolean D = BuildConfig.DEBUG;
 
 	// Model busy state changed message
 	public static final int BUSY_STATE_CHANGED_NOTIFICATION = 1;

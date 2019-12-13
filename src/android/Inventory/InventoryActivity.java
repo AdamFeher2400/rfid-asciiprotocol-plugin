@@ -4,6 +4,7 @@
 
 package com.uk.tsl.rfid.samples.inventory;
 
+import com.driverdude.ngnly2.BuildConfig;
 import com.driverdude.ngnly2.R;
 
 import com.uk.tsl.rfid.DeviceListActivity;
@@ -32,10 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
-
-// import androidx.appcompat.app.AppCompatActivity;
 import android.support.v7.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,8 +58,7 @@ public class InventoryActivity extends AppCompatActivity
 {
     // Debugging
     private static final String TAG = "InventoryActivity";
-    // private static final boolean D = BuildConfig.DEBUG;
-    private static final boolean D = true;
+    private static final boolean D = BuildConfig.DEBUG;
 
     // The list of results from actions
     private ArrayAdapter<String> mResultsArrayAdapter;
