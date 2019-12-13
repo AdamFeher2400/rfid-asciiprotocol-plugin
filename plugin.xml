@@ -37,26 +37,19 @@
     <!-- android -->
     <platform name="android">
         <source-file src="src/android/RFIDAsciiProtocol.java" target-dir="src/com/yiyi45" />
+        <source-file src="src/android/DeviceList" target-dir="src/com/uk/tsl/rfid" />
+        <source-file src="src/android/Inventory" target-dir="src/com/uk/tsl/rfid" />
+
+        <source-file src="res" target-dir="res" />
         
-        <source-file src="src/android/DeviceList/DeviceListActivity.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/DeviceList/ItemClickSupport.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/DeviceList/ReaderMedia.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/DeviceList/ReaderViewAdapter.java" target-dir="src/com/uk/tsl/rfid" />
-        
-        <source-file src="src/android/Inventory/ModelBase.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/Inventory/ModelException.java" target-dir="src/com/uk/tsl/rfid" />
-        <source-file src="src/android/Inventory/WeakHandler.java" target-dir="src/com/uk/tsl/rfid" />
-        
-        <source-file src="src/android/Inventory/InventoryActivity.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />
-        <source-file src="src/android/Inventory/InventoryModel.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />        
-        
+        <resource-file src="lib/Rfid.AsciiProtocol-2.0.1-release.aar" target="libs/Rfid.AsciiProtocol-2.0.1-release.aar"/>
+
+        <framework src="src/android/Rfid.AsciiProtocol-2.0.1-release.gradle" custom="true" type="gradleReference" />
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="RFIDAsciiProtocol" >
                 <param name="android-package" value="com.yiyi45.RFIDAsciiProtocol"/>
             </feature>
         </config-file>
-
-        <framework src="src/android/Rfid.AsciiProtocol-2.0.1-release.gradle" custom="true" type="gradleReference" />
-        <resource-file src="lib/Rfid.AsciiProtocol-2.0.1-release.aar" target="libs/Rfid.AsciiProtocol-2.0.1-release.aar"/>
     </platform>
 </plugin>

@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- DeviceList -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+
+    <!-- Inventory -->
+
+</resources>
