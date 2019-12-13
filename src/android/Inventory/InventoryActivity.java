@@ -4,6 +4,8 @@
 
 package com.uk.tsl.rfid.samples.inventory;
 
+import com.driverdude.ngnly2.R;
+
 import com.uk.tsl.rfid.DeviceListActivity;
 import com.uk.tsl.rfid.ModelBase;
 import com.uk.tsl.rfid.WeakHandler;
