@@ -125,6 +125,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 					if( message.startsWith("BC:")) {
                         // Barcode Handler
                         final PluginResult result = new PluginResult(PluginResult.Status.OK, message);
+                        result.setKeepCallback(true);
                         t.callback.sendPluginResult(result);
 					}
 					break;
@@ -261,12 +262,14 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
                     }
 
                     final PluginResult result = new PluginResult(PluginResult.Status.OK, "Connected");
+                    result.setKeepCallback(true);
                     callback.sendPluginResult(result);
                     return;
                 }
                 break;
         }
         final PluginResult result = new PluginResult(PluginResult.Status.OK, "Failed");
+        result.setKeepCallback(true);
         callback.sendPluginResult(result);
     }
 }
