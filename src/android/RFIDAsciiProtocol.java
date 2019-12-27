@@ -26,7 +26,6 @@ import com.uk.tsl.rfid.asciiprotocol.enumerations.QuerySession;
 import com.uk.tsl.rfid.asciiprotocol.enumerations.TriState;
 import com.uk.tsl.rfid.asciiprotocol.parameters.AntennaParameters;
 import com.uk.tsl.rfid.asciiprotocol.responders.LoggerResponder;
-import com.uk.tsl.rfid.samples.inventory.InventoryActivity;
 import com.uk.tsl.utils.Observable;
 
 public class RFIDAsciiProtocol extends CordovaPlugin {

@@ -47,7 +47,6 @@
         <source-file src="src/android/Inventory/ModelException.java" target-dir="src/com/uk/tsl/rfid" />
         <source-file src="src/android/Inventory/WeakHandler.java" target-dir="src/com/uk/tsl/rfid" />
         
-        <source-file src="src/android/Inventory/InventoryActivity.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />
         <source-file src="src/android/Inventory/InventoryModel.java" target-dir="src/com/uk/tsl/rfid/samples/inventory" />
 
         <resource-file src="res" target="res" />
@@ -56,7 +55,6 @@
         <framework src="src/android/Rfid.AsciiProtocol-2.0.1-release.gradle" custom="true" type="gradleReference" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.uk.tsl.rfid.samples.inventory.InventoryActivity" android:theme="@style/AppTheme" />
             <activity android:name="com.uk.tsl.rfid.DeviceListActivity" android:theme="@style/AppTheme" />
         </config-file>
 
