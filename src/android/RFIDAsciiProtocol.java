@@ -205,7 +205,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 	}
 
 	private boolean isConnected() {
-		return mReader != null && mReader.isConnected();
+		return getCommander().isConnected();
 	}
 
 	private void connect() {
