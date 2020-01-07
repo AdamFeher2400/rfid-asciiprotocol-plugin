@@ -129,7 +129,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 			try {
 				switch (msg.what) {
 				case ModelBase.MESSAGE_NOTIFICATION:
-					Toast.makeText(cordova.getActivity(), "Barcode Messenger called", Toast.LENGTH_SHORT).show();
+					Toast.makeText(t.cordova.getActivity(), "Barcode Messenger called", Toast.LENGTH_SHORT).show();
 					// Examine the message for prefix
 					String message = (String)msg.obj;
 					if( message.startsWith("BC:")) {
