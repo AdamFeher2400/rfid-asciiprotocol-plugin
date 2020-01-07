@@ -237,7 +237,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
         mModel.setEnabled(false);
 
         // Unregister to receive notifications from the AsciiCommander
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCommanderMessageReceiver);
+        LocalBroadcastManager.getInstance(cordova.getActivity()).unregisterReceiver(mCommanderMessageReceiver);
 
         ReaderManager.sharedInstance().onPause();
     }
@@ -246,7 +246,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 		mModel.setEnabled(true);
 
 		// Register to receive notifications from the AsciiCommander
-		LocalBroadcastManager.getInstance(activity).registerReceiver(mCommanderMessageReceiver, new IntentFilter(AsciiCommander.STATE_CHANGED_NOTIFICATION));
+		LocalBroadcastManager.getInstance(cordova.getActivity()).registerReceiver(mCommanderMessageReceiver, new IntentFilter(AsciiCommander.STATE_CHANGED_NOTIFICATION));
 		// The ReaderManager needs to know about Activity lifecycle changes
 		ReaderManager.sharedInstance().onResume();
 	
