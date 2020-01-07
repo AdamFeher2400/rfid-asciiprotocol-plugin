@@ -41,103 +41,100 @@ import static com.uk.tsl.rfid.DeviceListActivity.EXTRA_DEVICE_ACTION;
 import static com.uk.tsl.rfid.DeviceListActivity.EXTRA_DEVICE_INDEX;
 
 public class RFIDAsciiProtocol extends CordovaPlugin {
-    private static final String TAG = "RFIDAsciiProtocol";
-    
+	private static final String TAG = "RFIDAsciiProtocol";
+
 	// All of the reader inventory tasks are handled by this class
 	private InventoryModel mModel;
 
-    // The Reader currently in use
-    private Reader mReader = null;
+	// The Reader currently in use
+	private Reader mReader = null;
 
-    public RFIDAsciiProtocol() {
-    }
+	public RFIDAsciiProtocol() {
+	}
 
-    private void init() {
-        mGenericModelHandler = new GenericHandler(this);
+	private void init() {
+		mGenericModelHandler = new GenericHandler(this);
 
-        Activity activity = cordova.getActivity();
-        
+		Activity activity = cordova.getActivity();
+		
 		// Ensure the shared instance of AsciiCommander exists
-        AsciiCommander.createSharedInstance(activity.getApplicationContext());
-    	AsciiCommander commander = getCommander();
+		AsciiCommander.createSharedInstance(activity.getApplicationContext());
+		AsciiCommander commander = getCommander();
 
-        // Ensure that all existing responders are removed
-        commander.clearResponders();
+		// Ensure that all existing responders are removed
+		commander.clearResponders();
 
 		// Add the LoggerResponder - this simply echoes all lines received from the reader to the log
-        // and passes the line onto the next responder
-        // This is added first so that no other responder can consume received lines before they are logged.
-        commander.addResponder(new LoggerResponder());
+		// and passes the line onto the next responder
+		// This is added first so that no other responder can consume received lines before they are logged.
+		commander.addResponder(new LoggerResponder());
 
-        // Add a synchronous responder to handle synchronous commands
-        commander.addSynchronousResponder();
+		// Add a synchronous responder to handle synchronous commands
+		commander.addSynchronousResponder();
 
-        // Create the single shared instance for this ApplicationContext
-        ReaderManager.create(activity.getApplicationContext());
+		// Create the single shared instance for this ApplicationContext
+		ReaderManager.create(activity.getApplicationContext());
 
-        // Add observers for changes
-        ReaderManager.sharedInstance().getReaderList().readerRemovedEvent().addObserver(mRemovedObserver);
+		// Add observers for changes
+		ReaderManager.sharedInstance().getReaderList().readerRemovedEvent().addObserver(mRemovedObserver);
 
-        //Create a (custom) model and configure its commander and handler
-        mModel = new InventoryModel();
-        mModel.setCommander(getCommander());
-        mModel.setHandler(mGenericModelHandler);
-        mModel.setEnabled(true);
+		//Create a (custom) model and configure its commander and handler
+		mModel = new InventoryModel();
+		mModel.setCommander(getCommander());
+		mModel.setHandler(mGenericModelHandler);
+		
+		onResume();
 
-        // Register to receive notifications from the AsciiCommander
-        LocalBroadcastManager.getInstance(activity).registerReceiver(mCommanderMessageReceiver, new IntentFilter(AsciiCommander.STATE_CHANGED_NOTIFICATION));
-        // The ReaderManager needs to know about Activity lifecycle changes
-        ReaderManager.sharedInstance().onResume();
+		if( mModel.getCommand() != null ) {
+			mModel.getCommand().setQuerySession(QuerySession.SESSION_0);
+			mModel.updateConfiguration();
+		}
+	}
 
-        // The Activity may start with a reader already connected (perhaps by another App)
-        // Update the ReaderList which will add any unknown reader, firing events appropriately
-        ReaderManager.sharedInstance().updateList();
-    }
+	//----------------------------------------------------------------------------------------------
+	// ReaderList Observers
+	//----------------------------------------------------------------------------------------------
 
-    //----------------------------------------------------------------------------------------------
-    // ReaderList Observers
-    //----------------------------------------------------------------------------------------------
+	Observable.Observer<Reader> mRemovedObserver = new Observable.Observer<Reader>()
+	{
+		@Override
+		public void update(Observable<? extends Reader> observable, Reader reader)
+		{
+			// Was the current Reader removed
+			if( reader == mReader)
+			{
+				mReader = null;
 
-    Observable.Observer<Reader> mRemovedObserver = new Observable.Observer<Reader>()
-    {
-        @Override
-        public void update(Observable<? extends Reader> observable, Reader reader)
-        {
-            // Was the current Reader removed
-            if( reader == mReader)
-            {
-                mReader = null;
+				// Stop using the old Reader
+				getCommander().setReader(mReader);
+			}
+		}
+	};
 
-                // Stop using the old Reader
-                getCommander().setReader(mReader);
-            }
-        }
-    };
-
-    //----------------------------------------------------------------------------------------------
+	//----------------------------------------------------------------------------------------------
 	// Model notifications
 	//----------------------------------------------------------------------------------------------
 
-    private static class GenericHandler extends WeakHandler<RFIDAsciiProtocol>
-    {
-        public GenericHandler(RFIDAsciiProtocol t)
-        {
-            super(t);
-        }
+	private static class GenericHandler extends WeakHandler<RFIDAsciiProtocol>
+	{
+		public GenericHandler(RFIDAsciiProtocol t)
+		{
+			super(t);
+		}
 
-        @Override
-        public void handleMessage(Message msg, RFIDAsciiProtocol t)
-        {
+		@Override
+		public void handleMessage(Message msg, RFIDAsciiProtocol t)
+		{
 			try {
 				switch (msg.what) {
 				case ModelBase.MESSAGE_NOTIFICATION:
 					// Examine the message for prefix
 					String message = (String)msg.obj;
 					if( message.startsWith("BC:")) {
-                        // Barcode Handler
-                        final PluginResult result = new PluginResult(PluginResult.Status.OK, message);
-                        result.setKeepCallback(true);
-                        t.callback.sendPluginResult(result);
+						// Barcode Handler
+						final PluginResult result = new PluginResult(PluginResult.Status.OK, message);
+						result.setKeepCallback(true);
+						t.callback.sendPluginResult(result);
 					}
 					break;
 					
@@ -148,136 +145,165 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 			}
 			
 		}
-    };
-    
-    // The handler for model messages
-    private static GenericHandler mGenericModelHandler;
+	};
 
-    //----------------------------------------------------------------------------------------------
+	// The handler for model messages
+	private static GenericHandler mGenericModelHandler;
+
+	//----------------------------------------------------------------------------------------------
 	// AsciiCommander message handling
 	//----------------------------------------------------------------------------------------------
 
-    /**
-     * @return the current AsciiCommander
-     */
-    protected AsciiCommander getCommander()
-    {
-        return AsciiCommander.sharedInstance();
+	/**
+	 * @return the current AsciiCommander
+	 */
+	protected AsciiCommander getCommander()
+	{
+		return AsciiCommander.sharedInstance();
+	}
+
+	//
+	// Handle the messages broadcast from the AsciiCommander
+	//
+	private BroadcastReceiver mCommanderMessageReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if( getCommander().isConnected() )
+			{				
+				mModel.resetDevice();
+				mModel.updateConfiguration();
+			}
+		}
+	};
+
+
+
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+	}
+
+	public CallbackContext callback = null;
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		if("init".equals(action)) {
+			init();
+		}
+		else if ("isConnected".equals(action)) {
+			final PluginResult result = new PluginResult(PluginResult.Status.OK, String.valueOf(isConnected()));
+			callbackContext.sendPluginResult(result);
+		}
+		else if ("connect".equals(action)) {
+			callback = callbackContext;
+			connect();
+		}
+		else if("disconnect".equals(action)) {
+			disconnect();
+		}
+		else if("scan".equals(action)) {
+			scan();
+		}
+		return true;
+	}
+
+	private boolean isConnected() {
+		return mReader != null && mReader.isConnected();
+	}
+
+	private void connect() {
+		onPause();
+		cordova.setActivityResultCallback(this);
+		Context context = cordova.getActivity().getApplicationContext();
+		Intent selectIntent = new Intent(context, DeviceListActivity.class);
+		cordova.startActivityForResult(this, selectIntent, DeviceListActivity.SELECT_DEVICE_REQUEST);
+	}
+
+	private void disconnect() {
+		if( mReader != null )
+		{
+			mReader.disconnect();
+			mReader = null;
+		}
+	}
+
+	private void scan() {
+		try {
+			// Perform a transponder scan
+			mModel.scan();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void onPause() {
+        mModel.setEnabled(false);
+
+        // Unregister to receive notifications from the AsciiCommander
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mCommanderMessageReceiver);
+
+        ReaderManager.sharedInstance().onPause();
     }
 
-    //
-    // Handle the messages broadcast from the AsciiCommander
-    //
-    private BroadcastReceiver mCommanderMessageReceiver = new BroadcastReceiver() {
-    	@Override
-    	public void onReceive(Context context, Intent intent) {
-            if( getCommander().isConnected() )
-            {    			
-            	mModel.resetDevice();
-                mModel.updateConfiguration();
-            }
-    	}
-    };
+	private void onResume() {
+		mModel.setEnabled(true);
 
+		// Register to receive notifications from the AsciiCommander
+		LocalBroadcastManager.getInstance(activity).registerReceiver(mCommanderMessageReceiver, new IntentFilter(AsciiCommander.STATE_CHANGED_NOTIFICATION));
+		// The ReaderManager needs to know about Activity lifecycle changes
+		ReaderManager.sharedInstance().onResume();
+	
+		// The Activity may start with a reader already connected (perhaps by another App)
+		// Update the ReaderList which will add any unknown reader, firing events appropriately
+		ReaderManager.sharedInstance().updateList();
+	}
 
+	//
+	// Handle Intent results
+	//
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		switch (requestCode)
+		{
+			case DeviceListActivity.SELECT_DEVICE_REQUEST:
+				onResume();
+				// When DeviceListActivity returns with a device to connect
+				if (resultCode == Activity.RESULT_OK)
+				{
+					int readerIndex = data.getExtras().getInt(EXTRA_DEVICE_INDEX);
+					Reader chosenReader = ReaderManager.sharedInstance().getReaderList().list().get(readerIndex);
 
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-    }
+					int action = data.getExtras().getInt(EXTRA_DEVICE_ACTION);
 
-    public CallbackContext callback = null;
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if("init".equals(action)) {
-            init();
-        }
-        else if ("isConnected".equals(action)) {
-            final PluginResult result = new PluginResult(PluginResult.Status.OK, String.valueOf(isConnected()));
-            callbackContext.sendPluginResult(result);
-        }
-        else if ("connect".equals(action)) {
-            callback = callbackContext;
-            connect();
-        }
-        else if("disconnect".equals(action)) {
-            disconnect();
-        }
-        else if("scan".equals(action)) {
-            scan();
-        }
-        return true;
-    }
+					// If already connected to a different reader then disconnect it
+					if( mReader != null )
+					{
+						if( action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_DISCONNECT)
+						{
+							mReader.disconnect();
+							if(action == DeviceListActivity.DEVICE_DISCONNECT)
+							{
+								mReader = null;
+							}
+						}
+					}
 
-    private boolean isConnected() {
-        return mReader != null && mReader.isConnected();
-    }
+					// Use the Reader found
+					if( action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_CONNECT)
+					{
+						mReader = chosenReader;
+						getCommander().setReader(mReader);
 
-    private void connect() {
-        cordova.setActivityResultCallback(this);
-        Context context = cordova.getActivity().getApplicationContext();
-        Intent selectIntent = new Intent(context, DeviceListActivity.class);
-        cordova.startActivityForResult(this, selectIntent, DeviceListActivity.SELECT_DEVICE_REQUEST);
-    }
+						final PluginResult result = new PluginResult(PluginResult.Status.OK, "Connected");
+						result.setKeepCallback(true);
+						callback.sendPluginResult(result);
 
-    private void disconnect() {
-        if( mReader != null )
-        {
-            mReader.disconnect();
-            mReader = null;
-        }
-    }
-
-    private void scan() {
-        try {
-            // Perform a transponder scan
-            mModel.scan();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //
-    // Handle Intent results
-    //
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        switch (requestCode)
-        {
-            case DeviceListActivity.SELECT_DEVICE_REQUEST:
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK)
-                {
-                    int readerIndex = data.getExtras().getInt(EXTRA_DEVICE_INDEX);
-                    Reader chosenReader = ReaderManager.sharedInstance().getReaderList().list().get(readerIndex);
-
-                    int action = data.getExtras().getInt(EXTRA_DEVICE_ACTION);
-
-                    // If already connected to a different reader then disconnect it
-                    if( mReader != null )
-                    {
-                        if( action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_DISCONNECT)
-                        {
-                            mReader.disconnect();
-                            if(action == DeviceListActivity.DEVICE_DISCONNECT)
-                            {
-                                mReader = null;
-                            }
-                        }
-                    }
-
-                    // Use the Reader found
-                    if( action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_CONNECT)
-                    {
-                        mReader = chosenReader;
-                        getCommander().setReader(mReader);
-
-                        final PluginResult result = new PluginResult(PluginResult.Status.OK, "Connected");
-                        result.setKeepCallback(true);
-                        callback.sendPluginResult(result);
-                        return;
-                    }
-                }
-                break;
-        }
-    }
+						final PluginResult result1 = new PluginResult(PluginResult.Status.OK, "Another callback");
+						result1.setKeepCallback(true);
+						callback.sendPluginResult(result1);
+						
+						return;
+					}
+				}
+				break;
+		}
+	}
 }
