@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
+import android.widget.Toast;
 
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
@@ -128,6 +129,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 			try {
 				switch (msg.what) {
 				case ModelBase.MESSAGE_NOTIFICATION:
+					Toast.makeText(cordova.getActivity(), "Barcode Messenger called", Toast.LENGTH_SHORT).show();
 					// Examine the message for prefix
 					String message = (String)msg.obj;
 					if( message.startsWith("BC:")) {
@@ -205,6 +207,10 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 	}
 
 	private boolean isConnected() {
+		
+		if(mReader == null) {
+			Toast.makeText(cordova.getActivity(), "mReader is null", Toast.LENGTH_SHORT).show();
+		}
 		return getCommander().isConnected();
 	}
 
@@ -290,16 +296,14 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
 					if( action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_CONNECT)
 					{
 						mReader = chosenReader;
+						if(mReader == null) {
+							Toast.makeText(cordova.getActivity(), "Selected Reader is null", Toast.LENGTH_SHORT).show();
+						}
 						getCommander().setReader(mReader);
 
 						final PluginResult result = new PluginResult(PluginResult.Status.OK, "Connected");
 						result.setKeepCallback(true);
-						callback.sendPluginResult(result);
-
-						final PluginResult result1 = new PluginResult(PluginResult.Status.OK, "Another callback");
-						result1.setKeepCallback(true);
-						callback.sendPluginResult(result1);
-						
+						callback.sendPluginResult(result);						
 						return;
 					}
 				}
