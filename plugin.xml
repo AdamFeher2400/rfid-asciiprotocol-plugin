@@ -69,7 +69,7 @@
     <platform name="browser">
         <config-file target="config.xml" parent="/*">
             <feature name="RFIDAsciiProtocol">
-                <param name="browser-package" value="com.yiyi45.RFIDAsciiProtocol" />
+                <param name="browser-package" value="RFIDAsciiProtocol" />
             </feature>
         </config-file>
 
