@@ -64,4 +64,17 @@
             </feature>
         </config-file>
     </platform>
+
+    <!-- browser -->
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <feature name="RFIDAsciiProtocol">
+                <param name="browser-package" value="com.yiyi45.RFIDAsciiProtocol" />
+            </feature>
+        </config-file>
+
+        <js-module src="src/browser/RFIDAsciiProtocol.js" name="RFIDAsciiProtocol">
+            <runs />
+        </js-module>
+    </platform>
 </plugin>
