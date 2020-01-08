@@ -47,4 +47,4 @@ module.exports = {
     }
 };
 
-require('cordova/exec/proxy').add('Device', module.exports);
+require('cordova/exec/proxy').add('RFIDAsciiProtocol', module.exports);
