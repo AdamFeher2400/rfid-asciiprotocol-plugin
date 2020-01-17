@@ -124,6 +124,11 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
               final PluginResult result = new PluginResult(PluginResult.Status.OK, message);
               result.setKeepCallback(true);
               t.callback.sendPluginResult(result);
+            } else if(!message.startsWith("ER:")) {
+              // RFID Chip Handler
+              final PluginResult result = new PluginResult(PluginResult.Status.OK, message);
+              result.setKeepCallback(true);
+              t.callback.sendPluginResult(result);
             }
             break;
 
@@ -162,7 +167,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
         mModel.resetDevice();
         mModel.updateConfiguration();
 
-        final PluginResult result = new PluginResult(PluginResult.Status.OK, "PS:Connected");
+        final PluginResult result = new PluginResult(PluginResult.Status.OK, "ER:Connected");
         result.setKeepCallback(true);
         callback.sendPluginResult(result);
       }
@@ -293,7 +298,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
           if (action == DeviceListActivity.DEVICE_CHANGE || action == DeviceListActivity.DEVICE_CONNECT) {
             mReader = chosenReader;
             getCommander().setReader(mReader);
-            final PluginResult result = new PluginResult(PluginResult.Status.OK, "PS:Connecting");
+            final PluginResult result = new PluginResult(PluginResult.Status.OK, "ER:Connecting");
             result.setKeepCallback(true);
             callback.sendPluginResult(result);
           }
@@ -350,7 +355,7 @@ public class RFIDAsciiProtocol extends CordovaPlugin {
         }
 
         if(callback != null) {
-          final PluginResult result = new PluginResult(PluginResult.Status.OK, "PS:Connecting");
+          final PluginResult result = new PluginResult(PluginResult.Status.OK, "ER:Connecting");
           result.setKeepCallback(true);
           callback.sendPluginResult(result);
         }

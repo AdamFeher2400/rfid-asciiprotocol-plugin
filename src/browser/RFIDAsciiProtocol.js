@@ -32,8 +32,8 @@ module.exports = {
     connect: function(success, error) {
         console.log('RFIDAsciiProtocol Plugin connect');
         setTimeout(function () {
-            success("PS:Connecting");
-            success("PS:Connected");
+            success("ER:Connecting");
+            success("ER:Connected");
             isConnected = true;
             success("BC:62");
         }, 0);
